@@ -1,0 +1,25 @@
+version: '3'
+services:
+  laravel:
+    build: .
+    volumes:
+    - .:/app
+    ports:
+    - 8000:8000
+    links:
+    - database:db
+    command: "php artisan serve --host=0.0.0.0"
+
+  database:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    volumes:
+    - ./storage/mysql:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+    - 8080:80
+    links:
+    - database:db
